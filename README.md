@@ -71,7 +71,7 @@ sob a supervisao do professor MURILO ALMEIDA PACHECO @murilopacheco
 
 ### Diagrama de Classe
 
-![Figura 1](/Users/filipeabner/Engenharia de Software/20211-CIN20185-GO1301 - CONSTRUÇÃO DE SOFTWARE COMERCIAL/SistemaDeGestaoDeObras/docs/DiagramaDeClasse.png)
+![Figura 1](docs/DiagramaDeClasse.png)
 
 <u>Figura 1 - Diagrama de classe completo</u>	
 
