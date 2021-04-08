@@ -1,9 +1,9 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Medicao {
-    long id;
-    String nome;
-    String unidade;
+    private long id;
+    private String nome;
+    private String unidade;
 
     public Medicao(long id, String nome, String unidade) {
         this.id = id;

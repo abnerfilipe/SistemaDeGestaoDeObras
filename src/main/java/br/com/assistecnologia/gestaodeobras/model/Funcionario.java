@@ -1,14 +1,14 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Funcionario {
-    long id;
-    String nome;
-    String cpf;
-    String matricula;
-    Usuario usuario;
-    Endereco endereco;
-    Sexo sexo;
-    Obra obra;
+    private long id;
+    private String nome;
+    private String cpf;
+    private String matricula;
+    private Usuario usuario;
+    private Endereco endereco;
+    private Sexo sexo;
+    private Obra obra;
 
     public Funcionario(long id, String nome, String cpf, String matricula, Usuario usuario, Endereco endereco, Sexo sexo, Obra obra) {
         this.id = id;

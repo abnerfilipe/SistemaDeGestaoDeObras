@@ -1,10 +1,13 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Categoria {
-    long id;
-    String nome;
-    Boolean validar_valor_medicao;
-    Medicao medicao;
+    private long id;
+    private String nome;
+    private Boolean validar_valor_medicao;
+    private Medicao medicao;
+
+    public Categoria() {
+    }
 
     public Categoria(long id, String nome, Boolean validar_valor_medicao, Medicao medicao) {
         this.id = id;

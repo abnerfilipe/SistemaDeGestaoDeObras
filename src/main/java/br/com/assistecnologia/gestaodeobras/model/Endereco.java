@@ -1,18 +1,23 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Endereco {
-    long id;
-    String logradouro;
-    String numero;
-    String complemento;
-    Bairro bairro;
+    private long id;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
 
-    public Endereco(long id, String logradouro, String numero, String complemento, Bairro bairro) {
+    public Endereco() {
+    }
+
+    public Endereco(long id, String logradouro, String numero, String complemento, String bairro, String cidade) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
+        this.cidade = cidade;
     }
 
     public long getId() {
@@ -47,11 +52,19 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    public Bairro getBairro() {
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(Bairro bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    } 
 }

@@ -3,16 +3,16 @@ package br.com.assistecnologia.gestaodeobras.model;
 import java.util.ArrayList;
 
 public class Equipamento {
-    long id;
-    String nome;
-    String identificacao;
-    Double tanque;
-    Combustivel tipo_combustivel;
-    Obra obra;
-    Modelo modelo;
-    Categoria categoria;
-    EquipamentoStatus status;
-    ArrayList<Condutor> condutores;
+    private long id;
+    private String nome;
+    private String identificacao;
+    private  Double tanque;
+    private Combustivel tipo_combustivel;
+    private Obra obra;
+    private Modelo modelo;
+    private Categoria categoria;
+    private EquipamentoStatus status;
+    private ArrayList<Condutor> condutores;
 
 
 

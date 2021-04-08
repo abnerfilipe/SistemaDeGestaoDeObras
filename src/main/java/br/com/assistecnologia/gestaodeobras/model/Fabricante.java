@@ -1,8 +1,8 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Fabricante {
-    long id;
-    String nome;
+    private long id;
+    private String nome;
 
     public Fabricante(long id, String nome) {
         this.id = id;

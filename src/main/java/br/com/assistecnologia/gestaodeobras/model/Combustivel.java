@@ -1,8 +1,11 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Combustivel {
-    long id;
-    String nome;
+    private long id;
+    private String nome;
+
+    public Combustivel() {
+    }
 
     public Combustivel(long id, String nome) {
         this.id = id;

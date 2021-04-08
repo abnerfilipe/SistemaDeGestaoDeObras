@@ -1,9 +1,9 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Modelo {
-    long id;
-    String nome;
-    Fabricante fabricante;
+    private long id;
+    private String nome;
+    private Fabricante fabricante;
 
     public Modelo(long id, String nome, Fabricante fabricante) {
         this.id = id;

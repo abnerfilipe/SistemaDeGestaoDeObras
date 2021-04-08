@@ -3,9 +3,13 @@ package br.com.assistecnologia.gestaodeobras.model;
 import java.util.ArrayList;
 
 public class Almoxarifado {
-    long id;
-    ArrayList<Funcionario> funcionarios;
-    ArrayList<Material> materiais;
+    private long id;
+    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Material> materiais;
+
+
+    public Almoxarifado() {
+    }
 
     public Almoxarifado(long id, ArrayList<Funcionario> funcionarios, ArrayList<Material> materiais) {
         this.id = id;

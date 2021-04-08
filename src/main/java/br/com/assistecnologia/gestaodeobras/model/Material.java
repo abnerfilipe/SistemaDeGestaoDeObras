@@ -3,18 +3,23 @@ package br.com.assistecnologia.gestaodeobras.model;
 import java.util.Date;
 
 public class Material {
-    long id;
-    String nome;
-    Double peso;
-    Date validade;
-    TipoMaterial tipoMaterial;
+    private long id;
+    private String nome;
+    private Double peso;
+    private Date validade;
+    private String descricao;
+    private String observacao;
 
-    public Material(long id, String nome, Double peso, Date validade, TipoMaterial tipoMaterial) {
+    public Material() {
+    }
+
+    public Material(long id, String nome, Double peso, Date validade, String descricao, String observacao) {
         this.id = id;
         this.nome = nome;
         this.peso = peso;
         this.validade = validade;
-        this.tipoMaterial = tipoMaterial;
+        this.descricao = descricao;
+        this.observacao = observacao;
     }
 
     public long getId() {
@@ -49,11 +54,19 @@ public class Material {
         this.validade = validade;
     }
 
-    public TipoMaterial getTipoMaterial() {
-        return tipoMaterial;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTipoMaterial(TipoMaterial tipoMaterial) {
-        this.tipoMaterial = tipoMaterial;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 }

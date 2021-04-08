@@ -1,10 +1,18 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Usuario {
-    long id;
-    String name;
-    String email;
-    String username;
+    private long id;
+    private String name;
+    private String email;
+    private String username;
+    private Funcionario funcionario;
+
+    
+    public Usuario(String name, String email, String username) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+    }
 
     public long getId() {
         return id;
@@ -36,5 +44,13 @@ public class Usuario {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 }

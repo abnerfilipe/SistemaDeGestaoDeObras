@@ -1,11 +1,12 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
 public class Obra {
-    long id;
-    String nome;
-    String descricao;
-    Endereco endereco;
-    Almoxarifado almoxarifado;
+    private long id;
+    private String nome;
+    private String codigo;
+    private String descricao;
+    private Endereco endereco;
+    private Almoxarifado almoxarifado;
 
     public Obra(long id, String nome, String descricao, Endereco endereco, Almoxarifado almoxarifado) {
         this.id = id;
@@ -53,5 +54,13 @@ public class Obra {
 
     public void setAlmoxarifado(Almoxarifado almoxarifado) {
         this.almoxarifado = almoxarifado;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 }
