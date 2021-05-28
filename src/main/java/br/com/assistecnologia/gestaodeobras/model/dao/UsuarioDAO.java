@@ -107,9 +107,9 @@ public class UsuarioDAO {
 			return item;
 		}
 		catch(Exception e){
-			System.out.println("Erro ao EDITAR usuario:" + e.getMessage());	
+			System.out.println("Erro ao EDITAR usuario:" + e.getMessage());
+			return null;
 		}
-		return null;
 	}
 	public boolean delete(long id) {
 		boolean isSalvo = false;

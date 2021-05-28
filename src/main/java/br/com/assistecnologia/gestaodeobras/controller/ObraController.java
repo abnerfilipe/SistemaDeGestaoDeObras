@@ -15,7 +15,7 @@ public class ObraController {
 
     public Obra show(long id){
         ObraDAO obraDAO = new ObraDAO();
-        if(id <= 0 || obraDAO.read(id).isEmpty()){
+        if(id <= 0){
             System.err.println("O id nao pode ser nulo ou inexistente!");
             return null;
         }

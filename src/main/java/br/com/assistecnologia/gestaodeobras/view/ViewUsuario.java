@@ -32,7 +32,7 @@ public class ViewUsuario {
         Usuario usuario = this.controller.create(nome,email,username);
         if(usuario != null) System.out.println("usuario criado com sucesso!");
         System.out.println("--------------------------------------------------------");
-        this.scanner.close();
+        
 
     }
     public void editarUsuario() {
@@ -50,8 +50,6 @@ public class ViewUsuario {
         Usuario usuario = this.controller.edit(id,nome,email,username);
         if(usuario!=null) System.out.println("usuario editado com sucesso!");
         System.out.println("--------------------------------------------------------");
-        this.scanner.close();
-
     }
     public void buscarUsuario() {
         System.out.println("----------------Buscar Usuario---------------------");
@@ -59,11 +57,8 @@ public class ViewUsuario {
         long id = this.scanner.nextLong();
         System.out.println("Aguarde...");
         Usuario usuario = this.controller.show(id);
-        if(usuario != null)System.out.println("Usuario Encontrado: "+usuario);
-        else System.out.println("Usuario Não Encontrado");
+        if(usuario !=null)System.out.println("Usuario Encontrado: "+usuario);
         System.out.println("--------------------------------------------------------");
-        this.scanner.close();
-
     }
     public void excluirUsuario() {
         System.out.println("----------------Excluir Usuario---------------------");
@@ -73,8 +68,6 @@ public class ViewUsuario {
         if(this.controller.delete(id)) System.out.println("Usuario excluido com sucesso!");
         else System.out.println("Usuario não excluido!");
         System.out.println("--------------------------------------------------------");
-        this.scanner.close();
-
     }
  
 } 

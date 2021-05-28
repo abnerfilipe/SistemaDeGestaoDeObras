@@ -173,7 +173,7 @@ public class ViewObra {
         Material material = this.materialController.create(nome, peso, descricao, observacao, almoxarifado);
         if(material != null) System.out.println("material criado com sucesso!");
         System.out.println("--------------------------------------------------------");
-        scanner.close();
+        
     }
     public void editarMaterial(Almoxarifado almoxarifado) {
         Scanner scanner = new Scanner(System.in);
@@ -193,7 +193,7 @@ public class ViewObra {
         Material material = this.materialController.edit(id ,nome, peso, descricao, observacao, almoxarifado);
         if(material != null) System.out.println("material editado com sucesso!");
         System.out.println("--------------------------------------------------------");
-        scanner.close();
+        
 
     }
     public void buscarMaterial() {
@@ -206,7 +206,7 @@ public class ViewObra {
         if(material != null)System.out.println("Material Encontrado: "+material);
         else System.out.println("Material Não Encontrado");
         System.out.println("--------------------------------------------------------");
-        scanner.close();
+        
 
     }
     public void excluirMaterial() {
@@ -218,6 +218,6 @@ public class ViewObra {
         if(this.controller.delete(id)) System.out.println("Material excluido com sucesso!");
         else System.out.println("Material não excluido!");
         System.out.println("--------------------------------------------------------");
-        scanner.close();
+        
     }
 } 

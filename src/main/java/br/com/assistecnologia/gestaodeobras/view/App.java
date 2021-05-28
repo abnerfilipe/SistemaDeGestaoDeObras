@@ -20,7 +20,7 @@ public class App {
         System.out.println("===========================================================================\n");
         do {
             op = 0;
-            System.out.println("\n\n>>>|Menu Principal|<<<");
+            System.out.println("\n>>>|Menu Principal|<<<");
             System.out.println("0 - Finalizar");
             System.out.println("1 - Usuario");
             System.out.println("2 - Obra");
@@ -35,7 +35,7 @@ public class App {
                     ViewUsuario viewUsuario = new ViewUsuario();
                     do {
                         op = 0;
-                        System.out.println("\n\n>>>|Menu Usuario|<<<");
+                        System.out.println("\n>>>|Menu Usuario|<<<");
                         System.out.println("0 - Voltar");
                         System.out.println("1 - Listar");
                         System.out.println("2 - Buscar");
@@ -73,7 +73,7 @@ public class App {
                     ViewObra viewObra = new ViewObra();
                     do {
                         op = 0;
-                        System.out.println("\n\n>>>|Menu Obra|<<<");
+                        System.out.println("\n>>>|Menu Obra|<<<");
                         System.out.println("0 - Voltar");
                         System.out.println("1 - Listar");
                         System.out.println("2 - Buscar");
@@ -114,7 +114,7 @@ public class App {
                                 System.out.println("--------------------------------------------------------");  
                                 do {
                                     op = 0;
-                                    System.out.println("\n\n>>>|Menu Almoxarifdao|<<<");
+                                    System.out.println("\n>>>|Menu Almoxarifdao|<<<");
                                     System.out.println("0 - Voltar");
                                     System.out.println("1 - Listar");
                                     System.out.println("2 - Buscar");
@@ -153,9 +153,10 @@ public class App {
                                             if(almoxarifado != null)System.out.println("Almoxarifado Encontrado: "+almoxarifado);
                                             else System.out.println("almoxarifado Não Encontrado");
                                             System.out.println("--------------------------------------------------------");
+
                                             do {
                                                 op = 0;
-                                                System.out.println("\n\n>>>|Menu Materiais|<<<");
+                                                System.out.println("\n>>>|Menu Materiais|<<<");
                                                 System.out.println("0 - Voltar");
                                                 System.out.println("1 - Listar");
                                                 System.out.println("2 - Buscar");
@@ -164,6 +165,7 @@ public class App {
                                                 System.out.println("5 - Excluir");
                                                 System.out.println("Opcao: ");
                                                 op = scanner.nextInt();
+
                                                 switch (op) {
                                                     case 0:
                                                         System.out.println("voltando ao menu inicial....");
@@ -205,7 +207,7 @@ public class App {
                     ViewFuncionario viewFuncionario = new ViewFuncionario();
                     do {
                         op = 0;
-                        System.out.println("\n\n>>>|Menu Funcionario|<<<");
+                        System.out.println("\n>>>|Menu Funcionario|<<<");
                         System.out.println("0 - Voltar");
                         System.out.println("1 - Listar");
                         System.out.println("2 - Buscar");
@@ -238,7 +240,7 @@ public class App {
                             case 6:
                                 do {
                                     op = 0;
-                                    System.out.println("\n\n>>>|Menu Cargos|<<<");
+                                    System.out.println("\n>>>|Menu Cargos|<<<");
                                     System.out.println("0 - Voltar");
                                     System.out.println("1 - Listar");
                                     System.out.println("2 - Buscar");
@@ -275,7 +277,7 @@ public class App {
                             case 7:
                                 do {
                                     op = 0;
-                                    System.out.println("\n\n>>>|Menu Enderecos|<<<");
+                                    System.out.println("\n>>>|Menu Enderecos|<<<");
                                     System.out.println("0 - Voltar");
                                     System.out.println("1 - Listar");
                                     System.out.println("2 - Buscar");
