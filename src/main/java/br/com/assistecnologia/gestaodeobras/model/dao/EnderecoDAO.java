@@ -8,6 +8,7 @@ import br.com.assistecnologia.gestaodeobras.model.dao.utilDao.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,22 +31,22 @@ public class EnderecoDAO {
 	}
 
 	public List<Endereco> all(){
-		List<Endereco> data = new ArrayList();
+		List<Endereco> data = new ArrayList<Endereco>();
 		ResultSet set;
 	
 		try {
 			statement = con.createStatement();
-			set = statement.executeQuery("select * from endereco;");
+			set = statement.executeQuery("SELECT * FROM endereco ORDER BY id DESC;");
 					
 					while (set.next()) {
 						Endereco item = new Endereco();
 						item.setId(set.getInt("id"));
-						item.setNome(set.getString("nome"));
-						item.setNome(set.getString("numero"));
-						item.setNome(set.getString("complemento"));
-						item.setNome(set.getString("bairro"));
-						item.setNome(set.getString("cidade"));
-						item.setNome(set.getString("estado"));
+						item.setLogradouro(set.getString("logradouro"));
+						item.setNumero(set.getString("numero"));
+						item.setComplemento(set.getString("complemento"));
+						item.setBairro(set.getString("bairro"));
+						item.setCidade(set.getString("cidade"));
+						item.setEstado(set.getString("estado"));
 						data.add(item);
 					}
 		}
@@ -68,20 +69,19 @@ public class EnderecoDAO {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setLong(1, id);
 			set = preparedStatement.executeQuery();
-			// con.commit();	
-			// set.beforeFirst();
-			set.next();
-			// System.out.println(set.getInt("id"));
-			Endereco item = new Endereco();
-			item.setId(set.getInt("id"));
-			item.setNumero(set.getString("numero"));
-			item.setBairro(set.getString("bairro"));
-			item.setCidade(set.getString("cidade"));
-			item.setEstado(set.getString("estado"));
-			item.setLogradouro(set.getString("logradouro"));
-			item.setComplemento(set.getString("complemento"));
-			Optional<Endereco> res = Optional.ofNullable(item);
-			return res;
+			if(set.next()){
+				Endereco item = new Endereco();
+				item.setId(set.getInt("id"));
+				item.setNumero(set.getString("numero"));
+				item.setBairro(set.getString("bairro"));
+				item.setCidade(set.getString("cidade"));
+				item.setEstado(set.getString("estado"));
+				item.setLogradouro(set.getString("logradouro"));
+				item.setComplemento(set.getString("complemento"));
+				Optional<Endereco> res = Optional.ofNullable(item);
+				return res;
+			}
+			return Optional.empty();
 		}
 	
 		catch(Exception e) {
@@ -91,44 +91,10 @@ public class EnderecoDAO {
 	}
 
 
-	public boolean create(Endereco item) {	
-		boolean isSalvo = false;
+	public Endereco create(Endereco item){	
 		try {
 			String query = "insert into endereco (logradouro,numero,complemento,bairro,cidade,estado)"+
 			"values(?,?,?,?,?,?);";
-			con.setAutoCommit(false);
-			preparedStatement = con.prepareStatement(queryUsuario);
-			preparedStatement.setString(1, item.getLogradouro());
-			preparedStatement.setString(2, item.getNumero());
-			preparedStatement.setString(3, item.getComplemento());
-			preparedStatement.setString(4, item.getBairro());
-			preparedStatement.setString(5, item.getCidade());
-			preparedStatement.setString(6, item.getEstado());
-			preparedStatement.executeUpdate();
-			con.commit();			
-			isSalvo = true;
-		}
-		catch(Exception e){
-			System.out.println("Erro ao inserir item:" + e.getMessage());
-			isSalvo = false;			
-		}
-		return isSalvo;
-	}
-	
-	public boolean edit(Endereco item) {
-		boolean isSalvo = false;
-
-		 String query = "UPDATE endereco "
-				+ "SET logradouro = ?,"
-				+ "SET numero = ?,"
-				+ "SET complemento = ?,"
-				+ "SET bairro = ?,"
-				+ "SET cidade = ?,"
-				+ "SET estado = ?,"
-				+ "WHERE id = ?";	
-		
-		try {
-			
 			con.setAutoCommit(false);
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, item.getLogradouro());
@@ -138,17 +104,50 @@ public class EnderecoDAO {
 			preparedStatement.setString(5, item.getCidade());
 			preparedStatement.setString(6, item.getEstado());
 			preparedStatement.executeUpdate();
+			con.commit();	
+			int idTemp = 0;
+			ResultSet set = preparedStatement.executeQuery("select last_insert_id() as id");
+			while (set.next()) {
+				idTemp = set.getInt("id");
+				
+			}
+			item.setId(idTemp);
+			return item;
+		}
+		catch(Exception e){
+			System.out.println("Erro ao inserir item:" + e.getMessage());			
+		}
+		return null;
+	}
+	
+	public Endereco edit(Endereco item) {
+		try {
+			String query = "UPDATE endereco "
+			+ "SET logradouro = ?,"
+			+ "numero = ?,"
+			+ "complemento = ?,"
+			+ "bairro = ?,"
+			+ "cidade = ?,"
+			+ "estado = ?"
+			+ "WHERE id = ?";	
+			con.setAutoCommit(false);
+			preparedStatement = con.prepareStatement(query);
+			preparedStatement.setString(1, item.getLogradouro());
+			preparedStatement.setString(2, item.getNumero());
+			preparedStatement.setString(3, item.getComplemento());
+			preparedStatement.setString(4, item.getBairro());
+			preparedStatement.setString(5, item.getCidade());
+			preparedStatement.setString(6, item.getEstado());
+			preparedStatement.setLong(7, item.getId());
+			preparedStatement.executeUpdate();
 			con.commit();
-			isSalvo = true;
+			return item;
 		}
 		catch(Exception e){
 			
-			System.out.println("Erro ao editar item: " + e.getMessage());
-			isSalvo = false;			
-				
+			System.out.println("Erro ao editar item: " + e.getMessage());		
 		}
-		
-		return isSalvo;
+		return null;
 	}
 	public boolean delete(long id) {
 		boolean isSalvo = false;

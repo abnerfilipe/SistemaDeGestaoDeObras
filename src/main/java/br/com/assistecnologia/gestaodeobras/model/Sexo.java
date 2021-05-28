@@ -7,7 +7,7 @@ public enum Sexo {
     private String descricao;
 
     Sexo(String descricao) {
-        this.descricao =descricao;
+        this.descricao = descricao;
     }
 
     public String getDescricao() {

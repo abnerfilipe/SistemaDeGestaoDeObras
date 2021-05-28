@@ -9,5 +9,8 @@
         <module name="SistemaDeGestaoDeObras" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SistemaDeGestaoDeObras" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

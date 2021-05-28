@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `db_gestao_de_obras`.`almoxarifado` (
   `nome` VARCHAR(255) NULL DEFAULT NULL,
   `obra_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `index_almoxarifado_obra_id` (`obra_id` ASC) VISIBLE,
   CONSTRAINT `fk_almoxarifado_obra`
     FOREIGN KEY (`obra_id`)
     REFERENCES `db_gestao_de_obras`.`obra` (`id`))
@@ -99,7 +98,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `db_gestao_de_obras`.`funcionario` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `cpf` VARCHAR(255) NOT NULL,
-  `data_nascimento` DATE NULL DEFAULT NULL,
   `matricula` VARCHAR(255) NULL DEFAULT NULL,
   `nome` VARCHAR(255) NULL DEFAULT NULL,
   `sexo` VARCHAR(255) NULL DEFAULT NULL,

@@ -1,22 +1,30 @@
 package br.com.assistecnologia.gestaodeobras.controller;
 
+import java.util.List;
+
+import br.com.assistecnologia.gestaodeobras.model.Cargo;
+import br.com.assistecnologia.gestaodeobras.model.dao.CargoDAO;
+
 public class CargoController {
+
     public List<Cargo> index(){
-        return Cargo.listar();
+        CargoDAO itemDAO = new CargoDAO();
+        return itemDAO.all();
     }
 
     public Cargo show(long id){
         if(id <= 0){
-            System.err.println("O id nao pode ser nulo ou vazio!");
+            System.err.println("O id nao pode ser nulo!");
             return null;
         }
-        return Cargo.buscar(id);
+        CargoDAO itemDAO = new CargoDAO();
+        return itemDAO.read(id).get();
     }
 
-    public boolean edit(Long id, String nome){
+    public Cargo edit(Long id, String nome){
         try {
             boolean passed = false;
-            if(id != null && id.length() > 0){
+            if(id != null && id > 0){
                 passed = true;
             }
             if(passed == false){
@@ -29,45 +37,40 @@ public class CargoController {
             if(passed == false){
                 throw new Exception("O nome nao pode ser nulo e deve ser valido!");
             }
-           
-            Cargo itemPraEditar= new Cargo(id,nome);
-            return itemPraEditar.editar();
+            CargoDAO itemDAO = new CargoDAO();
+            Cargo item= new Cargo(id,nome);
+            return itemDAO.edit(item);
         } catch (Exception e) {
-            System.err.println("Erro ao criar :\t" + e.getMessage());
-            return false;
+            System.err.println("Erro ao editar :\t" + e.getMessage());
+            return null;
         }
     }
-    public boolean create(Long id, String nome){
+    public Cargo create(String nome){
         try {
             boolean passed = false;
-            if(id != null && nome.length() > 0){
-                passed = true;
-            }
-            if(passed == false){
-                throw new Exception("O id nao pode ser nulo ou vazio!");
-            }
-            passed = false;
-            if(nome != null && codigo.length() > 0){
+            if(nome != null && nome.length() > 0){
                 passed = true;
             };
             if(passed == false){
-                throw new Exception("O nome nao pode ser nulo e deve ser valido!");
+                throw new Exception("O nome nao pode ser nulo!");
             }
-            Cargo item= new Cargo(id,nome,codigo, descricao);
-            return item.criar();
+            CargoDAO itemDAO = new CargoDAO();
+            Cargo item= new Cargo(nome);
+            return itemDAO.create(item);
         } catch (Exception e) {
             System.err.println("Erro ao criar :\t" + e.getMessage());
-            return false;
+            return null;
         }
     }
   
 
     public boolean delete(long id){
-        if(id <= 0){
-            System.err.println("O id nao pode ser nulo ou vazio!");
+        if(id <= 0 ){
+            System.err.println("O id nao pode ser nulo!");
             return false;
         }
-        return Cargo.excluir(id);
+        CargoDAO itemDAO = new CargoDAO();
+        return itemDAO.delete(id);
     }
 
 }

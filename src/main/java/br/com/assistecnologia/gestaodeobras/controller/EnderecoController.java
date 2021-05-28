@@ -1,21 +1,29 @@
 package br.com.assistecnologia.gestaodeobras.controller;
 
+import java.util.List;
+
 import br.com.assistecnologia.gestaodeobras.model.Endereco;
+import br.com.assistecnologia.gestaodeobras.model.dao.EnderecoDAO;
 
 public class EnderecoController {
+ 
+
+
     public List<Endereco> index(){
-        return Endereco.listar();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        return enderecoDAO.all();
     }
 
     public Endereco show(long id) {
-        if(id <= 0){
-            System.err.println("O id nao pode ser nulo ou vazio!");
+        if(id <= 0 ){
+            System.err.println("O id nao pode ser nulo !");
             return null;
         }
-        return Endereco.buscar(id);
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        return enderecoDAO.read(id).get();
     }
     
-    public boolean edit(
+    public Endereco edit(
         Long id,
         String logradouro,
         String numero,
@@ -26,7 +34,7 @@ public class EnderecoController {
     ){
         try {
             boolean passed = false;
-            if(id != null && id.length() > 0){
+            if(id != null && id > 0){
                 passed = true;
             }
             if(passed == false){
@@ -75,14 +83,16 @@ public class EnderecoController {
                 throw new Exception("O estado nao pode ser nulo e deve ser valido!");
             }
            
-            Endereco itemPraEditar= new Endereco(id,logradouro,numero,complemento,bairro,cidade,estado);
-            return itemPraEditar.editar();
+            Endereco item= new Endereco(id,logradouro,numero,complemento,bairro,cidade,estado);
+            EnderecoDAO enderecoDAO = new EnderecoDAO();
+            return enderecoDAO.edit(item);
         } catch (Exception e) {
-            System.err.println("Erro ao criar :\t" + e.getMessage());
-            return false;
+            System.err.println("Erro ao editar :\t" + e.getMessage());
+            return null;
         }
     }
-    public boolean create(
+
+    public Endereco create(
         String logradouro,
         String numero,
         String complemento, 
@@ -134,20 +144,22 @@ public class EnderecoController {
         if(passed == false){
             throw new Exception("O estado nao pode ser nulo e deve ser valido!");
         }
-       
-        Endereco item = new Endereco(id,logradouro,numero,complemento,bairro,cidade,estado);
-        return item.criar();
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        Endereco item = new Endereco(logradouro,numero,complemento,bairro,cidade,estado);
+        return enderecoDAO.create(item);
         } catch (Exception e) {
             System.err.println("Erro ao criar :\t" + e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public boolean delete(long id){
-        if(id <= 0){
-            System.err.println("O id nao pode ser nulo ou vazio!");
+        
+        if(id <= 0 ){
+            System.err.println("O id nao pode ser nulo ou inexistente!");
             return false;
         }
-        return Endereco.excluir(id);
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        return enderecoDAO.delete(id);
     }
 }

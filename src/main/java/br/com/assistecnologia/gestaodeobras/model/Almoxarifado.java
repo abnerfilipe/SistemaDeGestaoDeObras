@@ -6,21 +6,25 @@ import br.com.assistecnologia.gestaodeobras.model.dao.AlmoxarifadoDAO;
 
 public class Almoxarifado {
     private long id;
+    private String nome;
     private Obra obra;
     private ArrayList<Material> materiais;
-    private AlmoxarifadoDAO almoxarifadoDAO;
 
     public Almoxarifado() {
-        this.almoxarifadoDAO = new AlmoxarifadoDAO();
+
     }
 
-    public Almoxarifado(long id, ArrayList<Funcionario> funcionarios, ArrayList<Material> materiais, Obra obra) {
-        this.id = id;
-        this.funcionarios = funcionarios;
-        this.materiais = materiais;
+    public Almoxarifado(String nome, Obra obra) {
+        this.nome = nome;
         this.obra = obra;
-        this.almoxarifadoDAO = new AlmoxarifadoDAO();
     }
+    public Almoxarifado(Long id, String nome, Obra obra) {
+        this.id = id;
+        this.nome = nome;
+        this.obra = obra;
+    }
+
+
 
     public long getId() {
         return id;
@@ -46,12 +50,19 @@ public class Almoxarifado {
         this.obra = obra;
     }
 
-    @Override
-    public String toString() {
-        return "Almoxarifado [id=" + id + ", obra=" + obra + "]";
+    public String getNome() {
+        return nome;
     }
-    
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     
-    // methods
+   @Override
+    public String toString() {
+        return "[id=" + id + ", nome=" + nome + ", obra=" + obra + "]";
+    }
+
+    
 }

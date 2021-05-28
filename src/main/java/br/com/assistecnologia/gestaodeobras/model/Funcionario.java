@@ -1,5 +1,9 @@
 package br.com.assistecnologia.gestaodeobras.model;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
 import br.com.assistecnologia.gestaodeobras.model.dao.FuncionarioDAO;
 
 public class Funcionario {
@@ -12,10 +16,9 @@ public class Funcionario {
     private Sexo sexo;
     private Obra obra;
     private Cargo cargo;
-    private FuncionarioDAO funcionarioDAO;
-   
+
     public Funcionario(){
-        this.funcionarioDAO = new FuncionarioDAO();
+
     }
 
     public Funcionario(
@@ -38,13 +41,23 @@ public class Funcionario {
         this.sexo = sexo;
         this.obra = obra;
         this.cargo = cargo;
-        this.funcionarioDAO = new FuncionarioDAO();
 
+    }
+
+    public Funcionario(String nome, String cpf, String matricula, Usuario usuario, Endereco endereco, Sexo sexo, Obra obra, Cargo cargo) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.matricula = matricula;
+        this.usuario = usuario;
+        this.endereco = endereco;
+        this.sexo = sexo;
+        this.obra = obra;
+        this.cargo = cargo;
     }
 
 
 
-    public long getId() { d
+    public long getId() {
         return id;
     }
     public void setId(long id) {
@@ -99,42 +112,13 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public FuncionarioDAO getFuncionarioDAO() {
-        return funcionarioDAO;
-    }
-
-    public void setFuncionarioDAO(FuncionarioDAO funcionarioDAO) {
-        this.funcionarioDAO = funcionarioDAO;
-    }
-
     // Override
 
     @Override
     public String toString() {
-        return "Funcionario [id=" + id + ", cargo=" + cargo + ", cpf=" + cpf + ", endereco=" + endereco + ", matricula="
-                + matricula + ", nome=" + nome + ", obra=" + obra + ", sexo=" + sexo + ", usuario=" + usuario + "]";
+        return "[id: " + id + ", cargo: " + cargo + ", cpf: " + cpf + ", endereco: " + endereco + ", matricula: "
+                + matricula + ", nome: " + nome + ", obra: " + obra + ", sexo: " + sexo + ", usuario: " + usuario + "]";
     }
 
-    // Methods
-
-    public boolean criar() {
-        return this.getFuncionarioDAO().create(this);
-    }
-
-    public boolean editar() {
-        return this.getFuncionarioDAO().edit(this);
-    }
-    public static List<Cargo> listar() {
-        Funcionario item = new Funcionario();
-        return item.getFuncionarioDAO().all();
-    }
-    public static Optional<Funcionario> buscar(long id){
-        Funcionario item = new Funcionario();
-        return item.getFuncionarioDAO().read(id);
-    }
-    public static boolean excluir(long id){
-        Funcionario item = new Funcionario();
-        return item.getFuncionarioDAO().delete(id);
-    }
 
 }

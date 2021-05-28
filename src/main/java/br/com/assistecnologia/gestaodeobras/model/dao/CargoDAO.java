@@ -62,15 +62,14 @@ public class CargoDAO {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setLong(1, id);
 			set = preparedStatement.executeQuery();
-			// con.commit();	
-			// set.beforeFirst();
-			set.next();
-			// System.out.println(set.getInt("id"));
-			Cargo item = new Cargo();
-			item.setId(set.getInt("id"));
-			item.setNome(set.getString("nome"));
-			Optional<Cargo> res = Optional.ofNullable(item);
-			return res;
+			if(set.next()){
+				Cargo item = new Cargo();
+				item.setId(set.getInt("id"));
+				item.setNome(set.getString("nome"));
+				Optional<Cargo> res = Optional.ofNullable(item);
+				return res;
+			}
+			return Optional.empty();
 		}
 		catch(Exception e) {
 			System.err.println("erro ao mostrar item:  " + e.getMessage());
@@ -78,29 +77,34 @@ public class CargoDAO {
 		}
 	}
 	
-	public boolean create(Cargo item) {	
-		boolean isSalvo = false;
+	public Cargo create(Cargo item) {	
 		try {
 			String query = "insert into cargo (nome) values(?);";
 			con.setAutoCommit(false);
-			preparedStatement = con.prepareStatement(queryUsuario);
+			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, item.getNome());
 			preparedStatement.executeUpdate();
 			con.commit();			
-			isSalvo = true;
+			int idTemp = 0;
+			ResultSet set = preparedStatement.executeQuery("select last_insert_id() as id");
+			while (set.next()) {
+				idTemp = set.getInt("id");
+				
+			}
+			item.setId(idTemp);
+			return item;
 		}
 		catch(Exception e){
-			System.out.println("Erro ao inserir item:" + e.getMessage());
-			isSalvo = false;			
+			System.out.println("Erro ao inserir item:" + e.getMessage());		
 		}
-		return isSalvo;
+		return null;
 	}
 	
-	public boolean edit(Cargo item) {
+	public Cargo edit(Cargo item) {
 		boolean isSalvo = false;
 		
 		 String query = "UPDATE cargo "
-				+ "SET nome = ?,"
+				+ "SET nome = ?"
 				+ "WHERE id = ?";	
 		
 		try {
@@ -108,19 +112,18 @@ public class CargoDAO {
 			con.setAutoCommit(false);
 			preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, item.getNome());
-            preparedStatement.setString(2, item.getId());
+            preparedStatement.setLong(2, item.getId());
 			preparedStatement.executeUpdate();
 			con.commit();
-			isSalvo = true;
+			return item;
 		}
 		catch(Exception e){
 			
-			System.out.println("Erro ao editar item: " + e.getMessage());
-			isSalvo = false;			
+			System.out.println("Erro ao editar item: " + e.getMessage());		
 				
 		}
 		
-		return isSalvo;
+		return null;
 	}
 	public boolean delete(long id) {
 		boolean isSalvo = false;

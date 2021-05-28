@@ -1,20 +1,16 @@
 package br.com.assistecnologia.gestaodeobras.model.dao;
 
-import br.com.assistecnologia.gestaodeobras.model.Almoxarifado;
-import br.com.assistecnologia.gestaodeobras.model.Usuario;
-import br.com.assistecnologia.gestaodeobras.model.dao.utilDao.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.google.protobuf.Option;
+import br.com.assistecnologia.gestaodeobras.model.Almoxarifado;
+import br.com.assistecnologia.gestaodeobras.model.dao.utilDao.ConnectionFactory;
 
 public class AlmoxarifadoDAO {
     Connection con;
@@ -31,8 +27,8 @@ public class AlmoxarifadoDAO {
 		materialDAO = new MaterialDAO();
 	}
 
-	public List<Almoxarifado> all(){
-		List<Almoxarifado> data = new ArrayList();
+	public List<Almoxarifado> all() {
+		List<Almoxarifado> data = new ArrayList<Almoxarifado>();
 		ResultSet set;
 		
 		try {
@@ -43,20 +39,42 @@ public class AlmoxarifadoDAO {
 						Almoxarifado item = new Almoxarifado();
 						item.setId(set.getInt("id"));
 						item.setNome(set.getString("nome"));
-						item.setObra(obraDAO.read(set.getString("obra_id")).get());
+						item.setObra(obraDAO.read(set.getLong("obra_id")).get());
+						item.setMateriais(materialDAO.allFromAlmoxarifado(set.getInt("id")));
+						data.add(item);
+					}
+		}catch(Exception e) {
+			
+			System.err.println("erro ao listar item" + e.getMessage());
+			
+		}
+		
+		return data;
+	}
+	public ArrayList<Almoxarifado> allFromObra(long id){
+		ArrayList<Almoxarifado> data = new ArrayList<Almoxarifado>();
+		try {
+			statement = con.createStatement();
+			// ObraDAO obraDAO = new ObraDAO();
+			// AlmoxarifadoDAO almoxarifadoDAO = new AlmoxarifadoDAO();
+			ResultSet set = statement.executeQuery("select * from almoxarifado where obra_id = "+id);
+					
+					while (set.next()) {
+						Almoxarifado item = new Almoxarifado();
+						item.setId(set.getInt("id"));
+						item.setNome(set.getString("nome"));
+						item.setObra(obraDAO.read(set.getLong("obra_id")).get());
 						item.setMateriais(materialDAO.allFromAlmoxarifado(set.getInt("id")));
 						data.add(item);
 					}
 		}
 		catch(Exception e) {
-			
 			System.err.println("erro ao listar item" + e.getMessage());
-			
 		}
-		con.close();
 		return data;
-		
 	}
+
+
 	public Optional<Almoxarifado> read(long id){
 		try {
 			ResultSet set;
@@ -64,96 +82,84 @@ public class AlmoxarifadoDAO {
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setLong(1, id);
 			set = preparedStatement.executeQuery();
-			set.next();
-			Almoxarifado item = new Almoxarifado();
-			item.setId(set.getInt("id"));
-			item.setNome(set.getString("nome"));
-			item.setObra(obraDAO.read(set.getString("obra_id")).get());
-			item.setMateriais(materialDAO.allFromAlmoxarifado(set.getInt("id")));
-			Optional<Almoxarifado> res = Optional.ofNullable(item);
-			con.close();
-			return res;
+			if(set.next()){
+				Almoxarifado item = new Almoxarifado();
+				item.setId(set.getInt("id"));
+				item.setNome(set.getString("nome"));
+				item.setObra(obraDAO.read(set.getLong("obra_id")).get());
+//				item.setMateriais(materialDAO.allFromAlmoxarifado(set.getInt("id")));
+				Optional<Almoxarifado> res = Optional.ofNullable(item);
+
+				return res;
+			}
+			return Optional.empty();
 		}
 		catch(Exception e) {
 			System.err.println("erro ao mostrar item:  " + e.getMessage());
-			con.close();
 			return Optional.empty();
-		}finally{
-			con.close();
 		}
 	}
 	
-	public boolean create(Almoxarifado item) {	
-		boolean isSalvo = false;
+	public Almoxarifado create(Almoxarifado item){
+
 		try {
 			String query = "insert into almoxarifado (nome,obra_id) values(?,?);";
 			con.setAutoCommit(false);
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, item.getNome());
-			preparedStatement.setLong(1, item.getObra().getId());
+			preparedStatement.setLong(2, item.getObra().getId());
 			preparedStatement.executeUpdate();
 			con.commit();			
-			isSalvo = true;
-		}
-		catch(Exception e){
+			int idTemp = 0;
+			ResultSet set = preparedStatement.executeQuery("select last_insert_id() as id");
+			while (set.next()) {
+				idTemp = set.getInt("id");
+				
+			}
+			item.setId(idTemp);
+			return item;
+		}catch(Exception e){
 			System.out.println("Erro ao inserir item:" + e.getMessage());
-			isSalvo = false;			
+	
 		}
-		con.close();
-		return isSalvo;
+		return null;
 	}
 	
-	public boolean edit(Almoxarifado item) {
-		boolean isSalvo = false;
-		
-		 String query = "UPDATE almoxarifado "
-				+ "SET nome = ?,"
-				+ "SET obra_id = ?,"
-				+ "WHERE id = ?";	
-		
+	public Almoxarifado edit(Almoxarifado item) {
 		try {
-			
+			String query = "UPDATE almoxarifado SET nome = ?, obra_id = ? WHERE id = ?";
 			con.setAutoCommit(false);
 			preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, item.getNome());
-            preparedStatement.setString(2, item.getId());
-            preparedStatement.setLong(2, item.getObra().getId());
+			preparedStatement.setLong(2, item.getObra().getId());
+			preparedStatement.setLong(3, item.getId());
 			preparedStatement.executeUpdate();
 			con.commit();
-			isSalvo = true;
+			return item;
 		}
 		catch(Exception e){
 			
-			System.out.println("Erro ao editar item: " + e.getMessage());
-			isSalvo = false;			
+			System.out.println("Erro ao editar item: " + e.getMessage());		
 				
 		}
-		con.close();
-		return isSalvo;
+		return null;
 	}
-	public boolean delete(long id) {
-		boolean isSalvo = false;
-		
-		 String query = "delete from almoxarifado where id = ?";
-
+	public boolean delete(long id){
+	
 		try {
-			
+			boolean isSalvo = false;
+			String query = "delete from almoxarifado where id = ?";
 			con.setAutoCommit(false);
 			preparedStatement = con.prepareStatement(query);
 			preparedStatement.setLong(1,id);
 			preparedStatement.execute();
 			con.commit();			
 			isSalvo = true;
-			
-		}
-		catch(Exception e){
-			
+			return isSalvo;
+		}catch(Exception e){
 			System.out.println("Erro ao excluir item:" + e.getMessage());
-			isSalvo = false;			
-				
 		}
-		con.close();
-		return isSalvo;
+		return false;
 	}
 
 	// public boolean salvarPessoaComEndereco(Pessoa item) {
